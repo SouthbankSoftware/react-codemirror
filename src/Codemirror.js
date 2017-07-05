@@ -1,3 +1,13 @@
+/**
+ * @Author: Wahaj Shamim <wahaj>
+ * @Date:   2017-07-05T12:50:01+10:00
+ * @Email:  wahaj@southbanksoftware.com
+ * @Last modified by:   wahaj
+ * @Last modified time: 2017-07-05T12:50:33+10:00
+ */
+
+
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
@@ -26,10 +36,12 @@ const CodeMirror = createReactClass({
 		path: PropTypes.string,
 		value: PropTypes.string,
 		preserveScrollPosition: PropTypes.bool,
+		alwaysScrollToBottom: PropTypes.bool,
 	},
 	getDefaultProps () {
 		return {
 			preserveScrollPosition: false,
+			alwaysScrollToBottom: false
 		};
 	},
 	getCodeMirrorInstance () {
@@ -68,6 +80,11 @@ const CodeMirror = createReactClass({
 				var prevScrollPosition = this.codeMirror.getScrollInfo();
 				this.codeMirror.setValue(nextProps.value);
 				this.codeMirror.scrollTo(prevScrollPosition.left, prevScrollPosition.top);
+			} else if (this.props.alwaysScrollToBottom) {
+				this.codeMirror.setValue(nextProps.value);
+				var nextScrollPosition = this.codeMirror.getScrollInfo();
+				var scrollTop = nextScrollPosition.height - nextScrollPosition.clientHeight;
+				this.codeMirror.scrollTo(nextScrollPosition.left, scrollTop);
 			} else {
 				this.codeMirror.setValue(nextProps.value);
 			}
