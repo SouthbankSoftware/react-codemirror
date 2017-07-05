@@ -9940,7 +9940,7 @@ module.exports = debounce;
  * @Date:   2016-11-22T14:04:59+11:00
  * @Email:  wahaj@southbanksoftware.com
  * @Last modified by:   wahaj
- * @Last modified time: 2017-07-05T13:31:22+10:00
+ * @Last modified time: 2017-07-05T13:55:20+10:00
  */
 
 'use strict';
@@ -9970,7 +9970,7 @@ var CodeMirror = React.createClass({
 		path: React.PropTypes.string,
 		value: React.PropTypes.string,
 		preserveScrollPosition: React.PropTypes.bool,
-		alwaysScrollToBottom: PropTypes.bool
+		alwaysScrollToBottom: React.PropTypes.bool
 	},
 	getDefaultProps: function getDefaultProps() {
 		return {
