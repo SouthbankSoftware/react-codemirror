@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Codemirror = require('../../src/Codemirror');
-const createReactClass = require('create-react-class');
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/xml/xml');
@@ -12,7 +11,7 @@ var defaults = {
 	javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
 };
 
-var App = createReactClass({
+var App = React.createClass({
 	getInitialState () {
 		return {
 			code: defaults.markdown,
@@ -37,6 +36,9 @@ var App = createReactClass({
 			readOnly: !this.state.readOnly
 		}, () => this.refs.editor.focus());
 	},
+	interact (cm) {
+		console.log(cm.getValue());
+	},
 	render () {
 		var options = {
 			lineNumbers: true,
@@ -45,7 +47,7 @@ var App = createReactClass({
 		};
 		return (
 			<div>
-				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
+				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} interact={this.interact} />
 				<div style={{ marginTop: 10 }}>
 					<select onChange={this.changeMode} value={this.state.mode}>
 						<option value="markdown">Markdown</option>

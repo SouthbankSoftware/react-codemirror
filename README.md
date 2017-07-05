@@ -85,19 +85,12 @@ You can interact with the CodeMirror instance using a `ref` and the `getCodeMirr
 
 ### Properties
 
-* `autoFocus` `Boolean` automatically focuses the editor when it is mounted (default false)
 * `autoSave` `Boolean` automatically persist changes to underlying textarea (default false)
-* `className` `String` adds a custom css class to the editor
-* `codeMirrorInstance` `Function` provides a specific CodeMirror instance (defaults to `require('codemirror')`)
-* `defaultValue` `String` provides a default (not change tracked) value to the editor
-* `name` `String` sets the name of the editor input field
-* `options` `Object` options passed to the CodeMirror instance
-* `onChange` `Function (newValue)` called when a change is made
-* `onCursorActivity` `Function (codemirror)` called when the cursor is moved
-* `onFocusChange` `Function (focused)` called when the editor is focused or loses focus
-* `onScroll` `Function (scrollInfo)` called when the editor is scrolled
-* `preserveScrollPosition` `Boolean=false` preserve previous scroll position after updating value
 * `value` `String` the editor value
+* `preserveScrollPosition` `Boolean=false` Preserve previous scroll position after updating value
+* `options` `Object (newValue)` options passed to the CodeMirror instance
+* `onChange` `Function (newValue)` called when a change is made
+* `onFocusChange` `Function (focused)` called when the editor is focused or loses focus
 
 See the [CodeMirror API Docs](https://codemirror.net/doc/manual.html#api) for the available options.
 
@@ -127,4 +120,4 @@ See the [example source](https://github.com/JedWatson/react-codemirror/blob/mast
 
 ### License
 
-Copyright (c) 2016 Jed Watson. [MIT](LICENSE) Licensed.
+MIT. Copyright (c) 2016 Jed Watson.

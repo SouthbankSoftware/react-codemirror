@@ -1,41 +1,36 @@
 /**
  * @Author: Wahaj Shamim <wahaj>
- * @Date:   2017-07-05T12:50:01+10:00
+ * @Date:   2016-11-22T14:04:59+11:00
  * @Email:  wahaj@southbanksoftware.com
  * @Last modified by:   wahaj
- * @Last modified time: 2017-07-05T12:50:33+10:00
+ * @Last modified time: 2017-07-05T13:31:22+10:00
  */
 
 
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const PropTypes = require('prop-types');
+const findDOMNode = ReactDOM.findDOMNode;
 const className = require('classnames');
 const debounce = require('lodash.debounce');
-const isEqual = require('lodash.isequal');
-const createReactClass = require('create-react-class');
 
 function normalizeLineEndings (str) {
 	if (!str) return str;
 	return str.replace(/\r\n|\r/g, '\n');
 }
 
-const CodeMirror = createReactClass({
+const CodeMirror = React.createClass({
 	propTypes: {
-		autoFocus: PropTypes.bool,
-		className: PropTypes.any,
-		codeMirrorInstance: PropTypes.func,
-		defaultValue: PropTypes.string,
-		name: PropTypes.string,
-		onChange: PropTypes.func,
-		onCursorActivity: PropTypes.func,
-		onFocusChange: PropTypes.func,
-		onScroll: PropTypes.func,
-		options: PropTypes.object,
-		path: PropTypes.string,
-		value: PropTypes.string,
-		preserveScrollPosition: PropTypes.bool,
+		className: React.PropTypes.any,
+		codeMirrorInstance: React.PropTypes.func,
+		defaultValue: React.PropTypes.string,
+		onChange: React.PropTypes.func,
+		onFocusChange: React.PropTypes.func,
+		onScroll: React.PropTypes.func,
+		options: React.PropTypes.object,
+		path: React.PropTypes.string,
+		value: React.PropTypes.string,
+		preserveScrollPosition: React.PropTypes.bool,
 		alwaysScrollToBottom: PropTypes.bool,
 	},
 	getDefaultProps () {
@@ -54,15 +49,12 @@ const CodeMirror = createReactClass({
 	},
 	componentWillMount () {
 		this.componentWillReceiveProps = debounce(this.componentWillReceiveProps, 0);
-		if (this.props.path) {
-			console.error('Warning: react-codemirror: the `path` prop has been changed to `name`');
-		}
 	},
 	componentDidMount () {
+		const textareaNode = findDOMNode(this.refs.textarea);
 		const codeMirrorInstance = this.getCodeMirrorInstance();
-		this.codeMirror = codeMirrorInstance.fromTextArea(this.textareaNode, this.props.options);
+		this.codeMirror = codeMirrorInstance.fromTextArea(textareaNode, this.props.options);
 		this.codeMirror.on('change', this.codemirrorValueChanged);
-		this.codeMirror.on('cursorActivity', this.cursorActivity);
 		this.codeMirror.on('focus', this.focusChanged.bind(this, true));
 		this.codeMirror.on('blur', this.focusChanged.bind(this, false));
 		this.codeMirror.on('scroll', this.scrollChanged);
@@ -75,7 +67,7 @@ const CodeMirror = createReactClass({
 		}
 	},
 	componentWillReceiveProps: function (nextProps) {
-		if (this.codeMirror && nextProps.value !== undefined && nextProps.value !== this.props.value && normalizeLineEndings(this.codeMirror.getValue()) !== normalizeLineEndings(nextProps.value)) {
+		if (this.codeMirror && nextProps.value !== undefined && normalizeLineEndings(this.codeMirror.getValue()) !== normalizeLineEndings(nextProps.value)) {
 			if (this.props.preserveScrollPosition) {
 				var prevScrollPosition = this.codeMirror.getScrollInfo();
 				this.codeMirror.setValue(nextProps.value);
@@ -92,17 +84,11 @@ const CodeMirror = createReactClass({
 		if (typeof nextProps.options === 'object') {
 			for (let optionName in nextProps.options) {
 				if (nextProps.options.hasOwnProperty(optionName)) {
-					this.setOptionIfChanged(optionName, nextProps.options[optionName]);
+					this.codeMirror.setOption(optionName, nextProps.options[optionName]);
 				}
 			}
 		}
 	},
-	setOptionIfChanged (optionName, newValue) {
- 		const oldValue = this.codeMirror.getOption(optionName);
- 		if (!isEqual(oldValue, newValue)) {
- 			this.codeMirror.setOption(optionName, newValue);
- 		}
- 	},
 	getCodeMirror () {
 		return this.codeMirror;
 	},
@@ -116,9 +102,6 @@ const CodeMirror = createReactClass({
 			isFocused: focused,
 		});
 		this.props.onFocusChange && this.props.onFocusChange(focused);
-	},
-	cursorActivity (cm) {
-		this.props.onCursorActivity && this.props.onCursorActivity(cm);
 	},
 	scrollChanged (cm) {
 		this.props.onScroll && this.props.onScroll(cm.getScrollInfo());
@@ -136,13 +119,7 @@ const CodeMirror = createReactClass({
 		);
 		return (
 			<div className={editorClassName}>
-				<textarea
-					ref={ref => this.textareaNode = ref}
-					name={this.props.name || this.props.path}
-					defaultValue={this.props.value}
-					autoComplete="off"
-					autoFocus={this.props.autoFocus}
-				/>
+				<textarea ref="textarea" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
 			</div>
 		);
 	},
