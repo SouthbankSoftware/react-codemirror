@@ -3,7 +3,7 @@
  * @Date:   2016-11-22T14:04:59+11:00
  * @Email:  wahaj@southbanksoftware.com
  * @Last modified by:   wahaj
- * @Last modified time: 2017-07-05T13:55:20+10:00
+ * @Last modified time: 2017-08-14T12:29:50+10:00
  */
 
 
@@ -72,11 +72,6 @@ const CodeMirror = React.createClass({
 				var prevScrollPosition = this.codeMirror.getScrollInfo();
 				this.codeMirror.setValue(nextProps.value);
 				this.codeMirror.scrollTo(prevScrollPosition.left, prevScrollPosition.top);
-			} else if (this.props.alwaysScrollToBottom) {
-				this.codeMirror.setValue(nextProps.value);
-				var nextScrollPosition = this.codeMirror.getScrollInfo();
-				var scrollTop = nextScrollPosition.height - nextScrollPosition.clientHeight;
-				this.codeMirror.scrollTo(nextScrollPosition.left, scrollTop);
 			} else {
 				this.codeMirror.setValue(nextProps.value);
 			}
@@ -109,6 +104,11 @@ const CodeMirror = React.createClass({
 	codemirrorValueChanged (doc, change) {
 		if (this.props.onChange && change.origin !== 'setValue') {
 			this.props.onChange(doc.getValue(), change);
+		}
+		if (this.props.alwaysScrollToBottom) {
+			var nextScrollPosition = this.codeMirror.getScrollInfo();
+			var scrollTop = nextScrollPosition.height - nextScrollPosition.clientHeight;
+			this.codeMirror.scrollTo(nextScrollPosition.left, scrollTop);
 		}
 	},
 	render () {
