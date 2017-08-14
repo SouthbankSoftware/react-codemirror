@@ -3,7 +3,7 @@
  * @Date:   2016-11-22T14:04:59+11:00
  * @Email:  wahaj@southbanksoftware.com
  * @Last modified by:   wahaj
- * @Last modified time: 2017-08-14T12:29:50+10:00
+ * @Last modified time: 2017-08-14T12:37:37+10:00
  */
 
 
@@ -47,12 +47,6 @@ const CodeMirror = React.createClass({
 			isFocused: false,
 		};
 	},
-	constructor(props) {
-	  super(props);
-	  this.state = {
-	    alwaysScrollToBottom: props.alwaysScrollToBottom
-	  };
-	}
 	componentWillMount () {
 		this.componentWillReceiveProps = debounce(this.componentWillReceiveProps, 0);
 	},
@@ -65,11 +59,6 @@ const CodeMirror = React.createClass({
 		this.codeMirror.on('blur', this.focusChanged.bind(this, false));
 		this.codeMirror.on('scroll', this.scrollChanged);
 		this.codeMirror.setValue(this.props.defaultValue || this.props.value || '');
-		if (this.state && this.state.alwaysScrollToBottom) {
-			var nextScrollPosition = this.codeMirror.getScrollInfo();
-			var scrollTop = nextScrollPosition.height - nextScrollPosition.clientHeight;
-			this.codeMirror.scrollTo(nextScrollPosition.left, scrollTop);
-		}
 	},
 	componentWillUnmount () {
 		// is there a lighter-weight way to remove the cm instance?
