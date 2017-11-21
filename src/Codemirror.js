@@ -2,13 +2,12 @@
  * @Author: Wahaj Shamim <wahaj>
  * @Date:   2016-11-22T14:04:59+11:00
  * @Email:  wahaj@southbanksoftware.com
- * @Last modified by:   wahaj
- * @Last modified time: 2017-08-14T13:43:42+10:00
+ * @Last modified by:   guiguan
+ * @Last modified time: 2017-11-21T11:23:59+11:00
  */
 
-
-
 const React = require('react');
+const PropTypes = require('prop-types');
 const ReactDOM = require('react-dom');
 const findDOMNode = ReactDOM.findDOMNode;
 const className = require('classnames');
@@ -21,17 +20,17 @@ function normalizeLineEndings (str) {
 
 const CodeMirror = React.createClass({
 	propTypes: {
-		className: React.PropTypes.any,
-		codeMirrorInstance: React.PropTypes.func,
-		defaultValue: React.PropTypes.string,
-		onChange: React.PropTypes.func,
-		onFocusChange: React.PropTypes.func,
-		onScroll: React.PropTypes.func,
-		options: React.PropTypes.object,
-		path: React.PropTypes.string,
-		value: React.PropTypes.string,
-		preserveScrollPosition: React.PropTypes.bool,
-		alwaysScrollToBottom: React.PropTypes.bool,
+		className: PropTypes.any,
+		codeMirrorInstance: PropTypes.func,
+		defaultValue: PropTypes.string,
+		onChange: PropTypes.func,
+		onFocusChange: PropTypes.func,
+		onScroll: PropTypes.func,
+		options: PropTypes.object,
+		path: PropTypes.string,
+		value: PropTypes.string,
+		preserveScrollPosition: PropTypes.bool,
+		alwaysScrollToBottom: PropTypes.bool,
 	},
 	getDefaultProps () {
 		return {
